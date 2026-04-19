@@ -1,0 +1,19 @@
+# Ignore a specific file
+config.js
+
+# Ignore all files with a .log extension
+*.log
+
+# Ignore an entire directory (and all its contents)
+node_modules/
+dist/
+
+# Ignore files in a specific subdirectory
+logs/*.log
+
+# Exception: Ignore all .log files except important.log
+!important.log
+
+# Ignore OS-specific system files
+.DS_Store
+Thumbs.db
