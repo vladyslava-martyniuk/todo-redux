@@ -1,6 +1,7 @@
 import { MdClose } from "react-icons/md";
 import css from "./Task.module.css";
 import { removeTodo } from "redux/todos/todosSlice";
+import { toggleTodo } from "redux/todos/todosSlice";
 import { useDispatch } from "react-redux";
 export const Task = ({ task }) => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ export const Task = ({ task }) => {
         type="checkbox"
         className={css.checkbox}
         checked={task.completed}
+        onChange={() => dispatch(toggleTodo(task.id))}
       />
       <p className={css.text}>{task.text}</p>
       <button className={css.btn} onClick={() => dispatch(removeTodo(task.id))}>

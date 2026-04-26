@@ -27,12 +27,23 @@ const todosSlice = createSlice({
                 payload: id,
             }
         }
+    },
+    toggleTodo: {
+        reducer: (state, action) => {
+            const todo = state.find(todo => todo.id === action.payload);
+            todo.completed = !todo.completed;
+        },
+        prepare(id) {
+            return {
+                payload: id,
+            }
+        } 
     }
-
    
     }
 });
 console.log(todosSlice);
 export const { addTodo } = todosSlice.actions;
 export const { removeTodo } = todosSlice.actions;
+export const { toggleTodo } = todosSlice.actions;
 export const todosReducer = todosSlice.reducer;
