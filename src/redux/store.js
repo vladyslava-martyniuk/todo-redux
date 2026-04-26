@@ -6,6 +6,6 @@ import { filtersReducer } from "./filters/filtersSlice";
 export const store = configureStore({
     reducer: {
         todos: todosReducer,
-        filtersReducer: filtersReducer,
+        filters: filtersReducer,
     },
 });
