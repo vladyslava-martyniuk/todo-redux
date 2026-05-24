@@ -1,5 +1,5 @@
 import { Button } from "components/Button/Button";
-import {addTodo} from 'redux/todos/todosSlice';
+import {addTodo} from 'redux/todos/todosOperations';
 import { useDispatch } from "react-redux";
 import css from "./TaskForm.module.css";
 

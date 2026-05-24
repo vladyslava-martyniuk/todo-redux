@@ -1,7 +1,7 @@
 
 export const getVisibleTodos = (state) =>{
     const filter = state.filters;
-    const todos = state.todos;
+    const todos = state.todos.todos;
     console.log(state);
     switch(filter){
         case 'all': return todos;
@@ -12,5 +12,5 @@ export const getVisibleTodos = (state) =>{
 } 
 export const getFilter = state => state.filters;
 
-export const getActiveTodos = state => state.todos.filter(todo => !todo.completed);
-export const getCompletedTodos = state => state.todos.filter(todo => todo.completed);
+export const getActiveTodos = state => state.todos.todos.filter(todo => !todo.completed);
+export const getCompletedTodos = state => state.todos.todos.filter(todo => todo.completed);

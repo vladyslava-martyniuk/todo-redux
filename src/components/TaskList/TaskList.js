@@ -1,11 +1,14 @@
 import { Task } from "components/Task/Task";
 import css from "./TaskList.module.css";
 import { useSelector } from "react-redux";
+
 import { getVisibleTodos } from "redux/filters/filtersSelectors";
+
 
 
 export const TaskList = () => {
    const todos = useSelector(getVisibleTodos);
+   console.log(todos);
   return (
     <ul className={css.list}>
       {todos.map(task => (
@@ -14,5 +17,6 @@ export const TaskList = () => {
         </li>
       ))}
     </ul>
+    
   );
 };

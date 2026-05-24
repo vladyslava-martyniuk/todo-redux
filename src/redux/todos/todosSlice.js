@@ -1,49 +1,54 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "nanoid";
+import { fetchTodos, addTodo, deleteTodo, toggleTodoAsync, editTodo } from "./todosOperations";
 
-const initialState = [{id: 1, text: "Learn React", completed: false}];
+const initialState = {
+    error: null,
+    loading: false,
+    todos: [],
+};
+
 const todosSlice = createSlice({
     name: "todos",
     initialState,
 
-    reducers: {
-        addTodo: {
-            reducer: (state, action) => {state.push(action.payload)},
-        
-         prepare(text) {
-        return {
-            payload: {
-                id: nanoid(),
-                completed: false,
-                text
-            },
-        }
-    }
-    },
-    removeTodo:{
-        reducer: (state, action) => state.filter(todo => todo.id !== action.payload),
-        prepare(id) {
-            return {
-                payload: id,
+    extraReducers: builder => {
+        builder
+
+        .addCase(fetchTodos.fulfilled, (state, action) => {
+            state.todos = action.payload;
+        })
+
+        .addCase(addTodo.fulfilled, (state, action) => {
+            state.todos.push(action.payload);
+        })
+
+        .addCase(deleteTodo.fulfilled, (state, action) => {
+            state.todos = state.todos.filter(
+                todo => todo.id !== action.payload
+            );
+        })
+
+        .addCase(toggleTodoAsync.fulfilled, (state, action) => {
+            const index = state.todos.findIndex(
+                todo => todo.id === action.payload.id
+            );
+
+            if (index !== -1) {
+                state.todos[index] = action.payload;
             }
-        }
-    },
-    toggleTodo: {
-        reducer: (state, action) => {
-            const todo = state.find(todo => todo.id === action.payload);
-            todo.completed = !todo.completed;
-        },
-        prepare(id) {
-            return {
-                payload: id,
+        })
+
+        .addCase(editTodo.fulfilled, (state, action) => {
+            const index = state.todos.findIndex(
+                todo => todo.id === action.payload.id
+            );
+
+            if (index !== -1) {
+                state.todos[index] = action.payload;
             }
-        } 
-    }
-   
-    }
+        });
+
+    },
 });
-console.log(todosSlice);
-export const { addTodo } = todosSlice.actions;
-export const { removeTodo } = todosSlice.actions;
-export const { toggleTodo } = todosSlice.actions;
+
 export const todosReducer = todosSlice.reducer;
