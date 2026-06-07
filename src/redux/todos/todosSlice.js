@@ -22,13 +22,18 @@ const todosSlice = createSlice({
         })
 
         .addCase(addTodo.fulfilled, (state, action) => {
-            state.todos.push(action.payload)
+            todosAdapter.addOne(state, action.payload);
+            
         })
 
-        .addCase(deleteTodo.fulfilled, (state, action) => {
-            state.todos = state.todos.filter(
-                todo => todo.id !== action.payload
-            );
+       .addCase(deleteTodo.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            todosAdapter.removeOne(state, action.payload);
+            console.log(action.payload)
+            // state.todos = state.todos.filter(
+            //     todo => todo.id !== action.payload
+            // );
         })
 
         .addCase(toggleTodoAsync.fulfilled, (state, action) => {
@@ -48,13 +53,11 @@ const todosSlice = createSlice({
         })
 
         .addCase(editTodo.fulfilled, (state, action) => {
-            const index = state.todos.findIndex(
-                todo => todo.id === action.payload.id
-            );
-
-            if (index !== -1) {
-                state.todos[index] = action.payload;
-            }
+             todosAdapter.updateOne(state, {
+                id: action.payload.id,
+                changes: action.payload,
+            })
+            
         });
 
     },
