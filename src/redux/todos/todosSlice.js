@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { fetchTodos, addTodo, deleteTodo, toggleTodoAsync, editTodo } from "./todosOperations";
 
 const initialState = {
@@ -6,20 +6,23 @@ const initialState = {
     loading: false,
     todos: [],
 };
-
+const todosAdapter = createEntityAdapter();
 const todosSlice = createSlice({
     name: "todos",
-    initialState,
-
+    initialState: todosAdapter.getInitialState({
+        error: null,
+        loading: false,
+    }),
+   
     extraReducers: builder => {
-        builder
-
-        .addCase(fetchTodos.fulfilled, (state, action) => {
-            state.todos = action.payload;
+        builder.addCase(fetchTodos.fulfilled, (state, action) => {
+            state.loading = false;
+            state.error = null;
+            todosAdapter.setAll(state, action.payload);
         })
 
         .addCase(addTodo.fulfilled, (state, action) => {
-            state.todos.push(action.payload);
+            state.todos.push(action.payload)
         })
 
         .addCase(deleteTodo.fulfilled, (state, action) => {
@@ -29,13 +32,19 @@ const todosSlice = createSlice({
         })
 
         .addCase(toggleTodoAsync.fulfilled, (state, action) => {
-            const index = state.todos.findIndex(
-                todo => todo.id === action.payload.id
-            );
+            todosAdapter.updateOne(state, {
+                id: action.payload.id,
+                changes: {
+                    completed: action.payload.completed,
+                },
+            })
+            // const index = state.todos.findIndex(
+            //     todo => todo.id === action.payload.id
+            // );
 
-            if (index !== -1) {
-                state.todos[index] = action.payload;
-            }
+            // if (index !== -1) {
+            //     state.todos[index] = action.payload;
+            // }
         })
 
         .addCase(editTodo.fulfilled, (state, action) => {
@@ -52,3 +61,11 @@ const todosSlice = createSlice({
 });
 
 export const todosReducer = todosSlice.reducer;
+const todosSelectors = todosAdapter.getSelectors((state) => state.todos);
+console.log(todosSelectors);
+
+export const {
+    selectAll: selectTodos,
+    selectById: selectTodoById,
+    selectIds: selectTodoIds,
+} = todosSelectors

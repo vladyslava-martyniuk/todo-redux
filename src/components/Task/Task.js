@@ -2,7 +2,9 @@ import { MdClose } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import css from "./Task.module.css";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { selectTodoById } from "redux/todos/todosSlice";
 
 import {
   deleteTodo,
@@ -12,8 +14,12 @@ import {
 import { useState } from "react";
 import { EditModal } from "components/EditModal/EditModal";
 
-export const Task = ({ task }) => {
+export const Task = ({ id }) => {
   const [modal, isOpen] = useState(false);
+
+  const task = useSelector(state => selectTodoById(state, id));
+  console.log(task);
+  console.log(id);
   const dispatch = useDispatch();
 
   return (
