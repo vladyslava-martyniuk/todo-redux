@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "email": "vlada.martyniuk@gmail.com",
+      "password": "$2a$10$JpP0NMbRTYBd5Ix6Ujxq4.xS8jURLMWuIfn1OZyC6OoRILXEcYZg6",
+      "id": 1
+    },
+    {
+      "email": "qwerty@gmail.com",
+      "password": "$2a$10$b1ny/hA/DT5KhTBYgJjhKuu0Bf5JsaKtwlKjhpHJ57VjsnduwMC8m",
+      "id": 2
+    },
+    {
+      "email": "qwerty1234@gmail.com",
+      "password": "$2a$10$LZFNVeY4DkXCq2/IIxAtwegQHVYbGRrp.pdPfTroKFUvVrx08vu66",
+      "id": 3
+    }
+  ],
+  "todos": []
+}

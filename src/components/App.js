@@ -5,6 +5,7 @@ import { TaskList } from "components/TaskList/TaskList";
 import { fetchTodos } from "redux/todos/todosOperations";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { AuthForm } from "./AuthForm/AuthForm";
 
  export function App ()  {
   
@@ -15,9 +16,10 @@ import { useDispatch } from "react-redux";
   }, [dispatch]);
   return (
     <Layout>
-      <AppBar />
+       <AppBar />
       <TaskForm />
-      <TaskList />
+      <TaskList /> 
+      <AuthForm />
     </Layout>
   );
 };
